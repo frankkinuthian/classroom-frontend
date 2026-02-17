@@ -48,7 +48,17 @@ type SubjectUser = {
 const SubjectsShow = () => {
   const Link = useLink();
   const { id } = useParams();
-  const subjectId = id ?? "";
+  
+  if (!id) {
+    return (
+      <ShowView className="class-view">
+        <ShowViewHeader resource="subjects" title="Subject Details" />
+        <p className="text-sm text-muted-foreground">Invalid subject ID.</p>
+      </ShowView>
+    );
+  }
+
+  const subjectId = id;
 
   const { query } = useShow<SubjectDetails>({
     resource: "subjects",
