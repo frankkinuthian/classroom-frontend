@@ -19,6 +19,8 @@ import SubjectsList from "./pages/subjects/list";
 import SubjectsCreate from "./pages/subjects/create";
 import ClassList from "./pages/classes/list";
 import ClassesCreate from "./pages/classes/create";
+import SubjectsShow from "./pages/subjects/show";
+import ClassesShow from "./pages/classes/show";
 
 function App() {
   return (
@@ -71,12 +73,14 @@ function App() {
                   <Route path="subjects">
                     <Route index element={<SubjectsList />} />
                     <Route path="create" element={<SubjectsCreate />} />
+                    <Route path="show/:id" element={<SubjectsShow />} />
                   </Route>
 
                   {/* Classes */}
                   <Route path="classes">
                     <Route index element={<ClassList />} />
                     <Route path="create" element={<ClassesCreate />} />
+                    <Route path="show/:id" element={<ClassesShow />} />
                   </Route>
                 </Route>
               </Routes>
