@@ -48,20 +48,14 @@ type SubjectUser = {
 const SubjectsShow = () => {
   const Link = useLink();
   const { id } = useParams();
-  
-  if (!id) {
-    return (
-      <ShowView className="class-view">
-        <ShowViewHeader resource="subjects" title="Subject Details" />
-        <p className="text-sm text-muted-foreground">Invalid subject ID.</p>
-      </ShowView>
-    );
-  }
-
-  const subjectId = id;
+  const isIdValid = Boolean(id);
+  const subjectId = id ?? "";
 
   const { query } = useShow<SubjectDetails>({
     resource: "subjects",
+    queryOptions: {
+      enabled: isIdValid,
+    },
   });
 
   const details = query.data?.data;
@@ -195,6 +189,9 @@ const SubjectsShow = () => {
     columns: classColumns,
     refineCoreProps: {
       resource: `subjects/${subjectId}/classes`,
+      queryOptions: {
+        enabled: isIdValid,
+      },
       pagination: {
         pageSize: 10,
         mode: "server",
@@ -206,6 +203,9 @@ const SubjectsShow = () => {
     columns: userColumns,
     refineCoreProps: {
       resource: `subjects/${subjectId}/users`,
+      queryOptions: {
+        enabled: isIdValid,
+      },
       pagination: {
         pageSize: 10,
         mode: "server",
@@ -226,6 +226,9 @@ const SubjectsShow = () => {
     columns: userColumns,
     refineCoreProps: {
       resource: `subjects/${subjectId}/users`,
+      queryOptions: {
+        enabled: isIdValid,
+      },
       pagination: {
         pageSize: 10,
         mode: "server",
@@ -241,6 +244,15 @@ const SubjectsShow = () => {
       },
     },
   });
+
+  if (!isIdValid) {
+    return (
+      <ShowView className="class-view">
+        <ShowViewHeader resource="subjects" title="Subject Details" />
+        <p className="text-sm text-muted-foreground">Invalid subject ID.</p>
+      </ShowView>
+    );
+  }
 
   if (query.isLoading || query.isError || !details) {
     return (
