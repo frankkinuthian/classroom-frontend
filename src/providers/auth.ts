@@ -174,7 +174,7 @@ export const authProvider: AuthProvider = {
 
   forgotPassword: async ({ email }) => {
     try {
-      const response = await fetch(`${AUTH_BASE}/forget-password`, {
+      const response = await fetch(`${AUTH_BASE}/request-password-reset`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
