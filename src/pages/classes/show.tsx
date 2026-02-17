@@ -116,16 +116,7 @@ const ClassesShow = () => {
   }
 
   const teacherName = classDetails.teacher?.name ?? "Unknown";
-  const teacherInitials = teacherName
-    .split(" ")
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((part) => part[0]?.toUpperCase())
-    .join("");
-
-  const placeholderUrl = `https://placehold.co/600x400?text=${encodeURIComponent(
-    teacherInitials || "NA",
-  )}`;
+  const teacherInitials = getInitials(teacherName);
 
   return (
     <ShowView className="class-view class-show space-y-6">
@@ -180,10 +171,12 @@ const ClassesShow = () => {
             <div className="instructor">
               <p>👨‍🏫 Instructor</p>
               <div>
-                <img
-                  src={classDetails.teacher?.image ?? placeholderUrl}
-                  alt={teacherName}
-                />
+                <Avatar className="size-12">
+                  {classDetails.teacher?.image && (
+                    <AvatarImage src={classDetails.teacher.image} alt={teacherName} />
+                  )}
+                  <AvatarFallback>{teacherInitials || "NA"}</AvatarFallback>
+                </Avatar>
 
                 <div>
                   <p>{teacherName}</p>
